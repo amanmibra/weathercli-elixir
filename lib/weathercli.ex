@@ -1,18 +1,35 @@
 defmodule WeatherCLI do
-  @moduledoc """
-  Documentation for Weathercli.
-  """
+  use ExCLI.DSL, escript: true, mix_task: :sample
 
-  @doc """
-  Hello world.
+ name "weathercli"
+ description "CLI to tell you the weather"
+ long_description """
+ This is my long description
+ """
 
-  ## Examples
+ option :verbose,
+   help: "Increase the verbosity level",
+   aliases: [:v],
+   count: true
 
-      iex> Weathercli.hello
-      :world
+ command :hello do
+   aliases [:hi]
+   description "Greets the user"
+   long_description """
+   Gives a nice a warm greeting to whoever would listen
+   """
 
-  """
-  def main(argv) do
-    IO.inspect(argv)
-  end
+   argument :name
+   option :from, help: "the sender of hello"
+
+   run context do
+     if context.verbose >= 1 do
+       IO.puts("I am going to emit a greeting.")
+     end
+     if from = context[:from] do
+       IO.write("#{from} says: ")
+     end
+     IO.puts("Hello #{context.name}!")
+    end
+ end
 end
