@@ -43,11 +43,11 @@ defmodule WeatherCLI do
    run context do
      IO.inspect(context)
      zip = context[:zip]
-     if String.length(zip) !== 5 do
-       raise "Error: Please input a valid zipcode with 5 characters."
-     end
-     IO.puts "Running test:"
-     API.test
+     # if String.length(zip) !== 5 do
+     #   raise "Error: Please input a valid zipcode with 5 characters."
+     # end
+     IO.puts "Running API:"
+     API.currently zip
    end
  end
 
