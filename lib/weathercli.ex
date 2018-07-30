@@ -1,5 +1,6 @@
 defmodule WeatherCLI do
   use ExCLI.DSL, escript: true, mix_task: :sample
+  require API
 
  name "weathercli"
  description "CLI to tell you the weather"
@@ -31,5 +32,26 @@ defmodule WeatherCLI do
      end
      IO.puts("Hello #{context.name}!")
     end
+ end
+
+ command :currently do
+   aliases [:c]
+   description "Displays current weather for set zipcode"
+
+   argument :zip, [type: :string, default: 27529, metavar: :zipcode]
+
+   run context do
+     IO.inspect(context)
+     zip = context[:zip]
+     if String.length(zip) !== 5 do
+       raise "Error: Please input a valid zipcode with 5 characters."
+     end
+     IO.puts "Running test:"
+     API.test
+   end
+ end
+
+ command :forecast do
+
  end
 end
